@@ -1,0 +1,206 @@
+<template>
+  <section id="home" class="hero-section">
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-label"> المروج العربية للخرسانة الجاهزة والبلك </span>
+
+        <h1>
+          نبني أساس المستقبل
+          <span>بجودة تثق بها</span>
+        </h1>
+
+        <p>
+          نقدم حلول الخرسانة الجاهزة والبلك بأعلى معايير الجودة، من خلال خبرة متميزة وإمكانيات تواكب
+          احتياجات المشروعات الحديثة.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#contact" class="primary-button"> اطلب خدمة </a>
+
+          <a href="#about" class="secondary-button"> اكتشف الشركة </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-bottom-line"></div>
+  </section>
+</template>
+
+<style scoped>
+.hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 101px);
+  margin: 0;
+  background-image: url('public/images/concrete-plant.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Lighter image overlay */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 43, 69, 0.78), rgba(35, 71, 106, 0.58));
+}
+
+.container {
+  width: 94%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 750px;
+  text-align: right;
+  color: #ffffff;
+  padding: 80px 0;
+}
+
+.hero-label {
+  display: inline-block;
+  color: #ffb15c;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.hero-content h1 {
+  font-family: 'Alexandria', sans-serif;
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 800;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.hero-content h1 span {
+  display: block;
+  color: #ffb15c;
+}
+
+.hero-content p {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  max-width: 650px;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 2;
+  color: #f1f3f5;
+  margin: 0 0 35px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-actions a {
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.primary-button {
+  background: #f28c28;
+  color: #ffffff;
+  border: 1px solid #f28c28;
+}
+
+.primary-button:hover {
+  background: #dc7615;
+  border-color: #dc7615;
+  transform: translateY(-3px);
+}
+
+.secondary-button {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: #ffffff;
+}
+
+.secondary-button:hover {
+  background: #ffffff;
+  color: #23476a;
+  transform: translateY(-3px);
+}
+
+.hero-bottom-line {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 35%;
+  height: 5px;
+  background: #f28c28;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: calc(100svh - 101px);
+  }
+
+  .hero-overlay {
+    background: rgba(20, 43, 69, 0.72);
+  }
+
+  .hero-content {
+    padding: 65px 0;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(34px, 7vw, 46px);
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .hero-actions a {
+    padding: 12px 22px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .hero-section {
+    min-height: calc(100svh - 101px);
+  }
+
+  .hero-content {
+    padding: 55px 0;
+  }
+
+  .hero-label {
+    font-size: 14px;
+  }
+
+  .hero-content h1 {
+    font-size: 34px;
+    line-height: 1.6;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero-actions a {
+    text-align: center;
+  }
+}
+</style>
