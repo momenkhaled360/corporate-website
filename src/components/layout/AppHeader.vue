@@ -29,13 +29,13 @@ const navLinks = [
 
 <style scoped>
 .site-header {
-  background: #23476a;
+  background: #174a7e;
   padding: 15px 0;
-  border-bottom: 3px solid #f28c28;
+  border-bottom: 3px solid #c62828;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 18px rgba(35, 71, 106, 0.15);
+  box-shadow: 0 4px 18px rgba(23, 74, 126, 0.15);
 }
 
 .container {
@@ -68,14 +68,14 @@ const navLinks = [
 }
 
 .logo:hover .logo-name {
-  color: #ffb15c;
+  color: #ffcccc;
 }
 
 .logo-description {
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #ffb15c;
+  color: #dceaf7;
   line-height: 1.7;
 }
 
@@ -105,12 +105,12 @@ const navLinks = [
   right: 0;
   width: 0;
   height: 2px;
-  background: #f28c28;
+  background: #e53935;
   transition: width 0.3s ease;
 }
 
 .navigation a:hover {
-  color: #ffb15c;
+  color: #ffcccc;
 }
 
 .navigation a:hover::after {
@@ -119,7 +119,7 @@ const navLinks = [
 
 /* Contact Button */
 .contact-button {
-  background: #f28c28;
+  background: #c62828;
   color: #ffffff;
   padding: 11px 22px;
   border-radius: 6px;
@@ -133,9 +133,9 @@ const navLinks = [
 }
 
 .contact-button:hover {
-  background: #dc7615;
+  background: #a91f1f;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(242, 140, 40, 0.25);
+  box-shadow: 0 5px 15px rgba(198, 40, 40, 0.25);
 }
 
 /* Tablet */

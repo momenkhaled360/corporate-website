@@ -19,7 +19,7 @@
           بمواعيد التسليم، وتلبية احتياجات مختلف المشروعات.
         </p>
 
-        <a href="#contact" class="about-button"> تواصل معنا </a>
+        <a href="#contact" class="about-button">تواصل معنا</a>
       </div>
 
       <div class="about-visual">
@@ -60,7 +60,7 @@
 
 .section-label {
   display: inline-block;
-  color: #f28c28;
+  color: #c62828;
   font-size: 16px;
   font-weight: 800;
   margin-bottom: 18px;
@@ -70,14 +70,14 @@
   font-family: 'Alexandria', sans-serif;
   font-size: clamp(28px, 3vw, 42px);
   line-height: 1.6;
-  color: #23476a;
+  color: #174a7e;
   margin: 0 0 25px;
   font-weight: 800;
 }
 
 .about-content h2 span {
   display: block;
-  color: #f28c28;
+  color: #c62828;
 }
 
 .about-content p {
@@ -92,7 +92,7 @@
   display: inline-block;
   margin-top: 20px;
   padding: 13px 30px;
-  background: #23476a;
+  background: #174a7e;
   color: #ffffff;
   border-radius: 6px;
   text-decoration: none;
@@ -101,13 +101,13 @@
 }
 
 .about-button:hover {
-  background: #f28c28;
+  background: #c62828;
   transform: translateY(-3px);
 }
 
 .about-visual {
   min-height: 390px;
-  background: linear-gradient(145deg, #23476a, #142b45);
+  background: linear-gradient(145deg, #174a7e, #0f304f);
   border-radius: 12px;
   padding: 45px;
   display: flex;
@@ -138,7 +138,7 @@
   font-family: 'Alexandria', sans-serif;
   font-size: 70px;
   font-weight: 900;
-  color: #f28c28;
+  color: #e53935;
   display: block;
   margin-bottom: 15px;
 }
@@ -164,7 +164,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 20px;
   margin-top: 35px;
-  color: #ffb15c;
+  color: #ffb3b3;
   font-weight: 700;
 }
 

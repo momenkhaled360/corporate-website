@@ -92,7 +92,7 @@ function submitForm() {
 <style scoped>
 .contact-section {
   padding: 110px 0;
-  background: #e9eef3;
+  background: #f5f7fa;
 }
 
 .container {
@@ -108,21 +108,21 @@ function submitForm() {
 }
 
 .section-label {
-  color: #f28c28;
+  color: #c62828;
   font-size: 16px;
   font-weight: 800;
 }
 
 .contact-heading h2 {
   font-family: 'Alexandria', sans-serif;
-  color: #23476a;
+  color: #174a7e;
   font-size: clamp(28px, 3vw, 40px);
   line-height: 1.6;
   margin: 15px 0;
 }
 
 .contact-heading h2 span {
-  color: #f28c28;
+  color: #c62828;
 }
 
 .contact-heading p {
@@ -139,11 +139,24 @@ function submitForm() {
 }
 
 .contact-info {
-  background: #23476a;
+  background: linear-gradient(145deg, #174a7e, #0f304f);
   padding: 40px;
   border-radius: 10px;
   color: #ffffff;
   text-align: right;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-info::before {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border: 35px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  bottom: -100px;
+  left: -90px;
 }
 
 .contact-info h3,
@@ -154,7 +167,7 @@ function submitForm() {
 }
 
 .contact-info > p {
-  color: #d6e0e9;
+  color: #dceaf7;
   font-size: 15px;
   line-height: 2;
   margin-bottom: 35px;
@@ -165,6 +178,8 @@ function submitForm() {
   align-items: center;
   gap: 15px;
   margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .info-icon {
@@ -173,7 +188,7 @@ function submitForm() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f28c28;
+  background: #c62828;
   border-radius: 8px;
   font-size: 22px;
 }
@@ -184,7 +199,7 @@ function submitForm() {
 }
 
 .info-item p {
-  color: #d6e0e9;
+  color: #dceaf7;
   margin: 0;
   font-size: 14px;
 }
@@ -194,10 +209,11 @@ function submitForm() {
   padding: 40px;
   border-radius: 10px;
   text-align: right;
+  box-shadow: 0 8px 30px rgba(23, 74, 126, 0.06);
 }
 
 .contact-form h3 {
-  color: #23476a;
+  color: #174a7e;
   margin-bottom: 25px;
 }
 
@@ -207,7 +223,7 @@ function submitForm() {
 
 .form-group label {
   display: block;
-  color: #23476a;
+  color: #174a7e;
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 10px;
@@ -221,16 +237,18 @@ function submitForm() {
   border: 1px solid #dce4ec;
   border-radius: 6px;
   background: #f8fafc;
-  color: #23476a;
+  color: #174a7e;
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   font-size: 14px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #f28c28;
+  border-color: #c62828;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.08);
 }
 
 .form-group textarea {
@@ -241,7 +259,7 @@ function submitForm() {
   width: 100%;
   border: none;
   padding: 15px;
-  background: #f28c28;
+  background: #c62828;
   color: #ffffff;
   border-radius: 6px;
   font-family: 'IBM Plex Sans Arabic', sans-serif;
@@ -252,7 +270,9 @@ function submitForm() {
 }
 
 .submit-button:hover {
-  background: #dc7615;
+  background: #a91f1f;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(198, 40, 40, 0.2);
 }
 
 /* Responsive */

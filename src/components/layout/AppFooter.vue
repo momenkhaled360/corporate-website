@@ -15,7 +15,8 @@ const footerLinks = [
         <!-- Company Info -->
         <div class="footer-about">
           <a href="#home" class="footer-logo">
-            <span>شركه المروج العربية للمقاولات</span>
+            <span>شركة المروج العربية للمقاولات</span>
+            <small>وأعمال توريد الخرسانة الجاهزة والبلك</small>
           </a>
 
           <p>
@@ -43,14 +44,14 @@ const footerLinks = [
           <p>البريد: أضف البريد الإلكتروني</p>
           <p>العنوان: أضف عنوان الشركة</p>
 
-          <a href="#contact" class="footer-button"> اطلب خدمة </a>
+          <a href="#contact" class="footer-button">اطلب خدمة</a>
         </div>
       </div>
 
       <div class="footer-bottom">
         <p>
           © {{ new Date().getFullYear() }}
-          المروج العربية للخرسانة الجاهزة والبلك. جميع الحقوق محفوظة.
+          شركة المروج العربية للمقاولات. جميع الحقوق محفوظة.
         </p>
 
         <a href="#home">العودة للأعلى ↑</a>
@@ -61,9 +62,10 @@ const footerLinks = [
 
 <style scoped>
 .site-footer {
-  background: #142b45;
+  background: #0f304f;
   color: #ffffff;
   padding: 75px 0 0;
+  border-top: 4px solid #c62828;
 }
 
 .container {
@@ -95,14 +97,15 @@ const footerLinks = [
 
 .footer-logo span {
   font-family: 'Alexandria', sans-serif;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 900;
   color: #ffffff;
 }
 
 .footer-logo small {
-  font-size: 14px;
-  color: #ffb15c;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 13px;
+  color: #ffb3b3;
   font-weight: 600;
 }
 
@@ -117,7 +120,7 @@ const footerLinks = [
   font-family: 'Alexandria', sans-serif;
   font-size: 18px;
   margin: 5px 0 25px;
-  color: #ffb15c;
+  color: #e53935;
 }
 
 .footer-links ul {
@@ -138,7 +141,7 @@ const footerLinks = [
 }
 
 .footer-links a:hover {
-  color: #f28c28;
+  color: #ffb3b3;
 }
 
 .footer-contact p {
@@ -151,7 +154,7 @@ const footerLinks = [
   display: inline-block;
   margin-top: 12px;
   padding: 11px 24px;
-  background: #f28c28;
+  background: #c62828;
   color: #ffffff;
   border-radius: 6px;
   text-decoration: none;
@@ -160,7 +163,7 @@ const footerLinks = [
 }
 
 .footer-button:hover {
-  background: #dc7615;
+  background: #a91f1f;
   transform: translateY(-3px);
 }
 
@@ -181,10 +184,15 @@ const footerLinks = [
 }
 
 .footer-bottom a {
-  color: #ffb15c;
+  color: #ffb3b3;
   text-decoration: none;
   font-size: 14px;
   font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+  color: #e53935;
 }
 
 /* Responsive */
@@ -216,6 +224,10 @@ const footerLinks = [
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .footer-logo span {
+    font-size: 20px;
   }
 }
 </style>

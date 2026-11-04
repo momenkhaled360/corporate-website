@@ -17,9 +17,8 @@
         </p>
 
         <div class="hero-actions">
-          <a href="#contact" class="primary-button"> اطلب خدمة </a>
-
-          <a href="#about" class="secondary-button"> اكتشف الشركة </a>
+          <a href="#contact" class="primary-button">اطلب خدمة</a>
+          <a href="#about" class="secondary-button">اكتشف الشركة</a>
         </div>
       </div>
     </div>
@@ -42,11 +41,11 @@
   overflow: hidden;
 }
 
-/* Lighter image overlay */
+/* Blue Overlay */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(20, 43, 69, 0.78), rgba(35, 71, 106, 0.58));
+  background: linear-gradient(90deg, rgba(15, 48, 79, 0.82), rgba(23, 74, 126, 0.68));
 }
 
 .container {
@@ -66,7 +65,7 @@
 
 .hero-label {
   display: inline-block;
-  color: #ffb15c;
+  color: #ffb3b3;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 22px;
@@ -82,7 +81,7 @@
 
 .hero-content h1 span {
   display: block;
-  color: #ffb15c;
+  color: #e53935;
 }
 
 .hero-content p {
@@ -91,10 +90,11 @@
   font-size: 19px;
   font-weight: 400;
   line-height: 2;
-  color: #f1f3f5;
+  color: #f1f5f9;
   margin: 0 0 35px;
 }
 
+/* Buttons */
 .hero-actions {
   display: flex;
   align-items: center;
@@ -112,14 +112,14 @@
 }
 
 .primary-button {
-  background: #f28c28;
+  background: #c62828;
   color: #ffffff;
-  border: 1px solid #f28c28;
+  border: 1px solid #c62828;
 }
 
 .primary-button:hover {
-  background: #dc7615;
-  border-color: #dc7615;
+  background: #a91f1f;
+  border-color: #a91f1f;
   transform: translateY(-3px);
 }
 
@@ -130,17 +130,18 @@
 
 .secondary-button:hover {
   background: #ffffff;
-  color: #23476a;
+  color: #174a7e;
   transform: translateY(-3px);
 }
 
+/* Bottom Accent */
 .hero-bottom-line {
   position: absolute;
   bottom: 0;
   right: 0;
   width: 35%;
   height: 5px;
-  background: #f28c28;
+  background: #c62828;
 }
 
 /* Tablet */
@@ -150,7 +151,7 @@
   }
 
   .hero-overlay {
-    background: rgba(20, 43, 69, 0.72);
+    background: rgba(15, 48, 79, 0.78);
   }
 
   .hero-content {

@@ -32,7 +32,7 @@ const projects = [
           <div class="project-image">
             <img :src="project.image" :alt="project.title" />
 
-            <span class="project-number"> 0{{ index + 1 }} </span>
+            <span class="project-number">0{{ index + 1 }}</span>
 
             <div class="project-overlay">
               <span>{{ project.category }}</span>
@@ -64,21 +64,21 @@ const projects = [
 }
 
 .section-label {
-  color: #f28c28;
+  color: #c62828;
   font-size: 16px;
   font-weight: 800;
 }
 
 .section-heading h2 {
   font-family: 'Alexandria', sans-serif;
-  color: #23476a;
+  color: #174a7e;
   font-size: clamp(28px, 3vw, 40px);
   line-height: 1.6;
   margin: 15px 0;
 }
 
 .section-heading h2 span {
-  color: #f28c28;
+  color: #c62828;
 }
 
 .section-heading p {
@@ -102,7 +102,7 @@ const projects = [
   position: relative;
   height: 370px;
   overflow: hidden;
-  background: #23476a;
+  background: #174a7e;
 }
 
 .project-image img {
@@ -120,7 +120,7 @@ const projects = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(20, 43, 69, 0.95), rgba(20, 43, 69, 0.05) 70%);
+  background: linear-gradient(to top, rgba(15, 48, 79, 0.95), rgba(15, 48, 79, 0.05) 70%);
 }
 
 .project-number {
@@ -132,6 +132,9 @@ const projects = [
   font-family: 'Alexandria', sans-serif;
   font-size: 20px;
   font-weight: 800;
+  background: #c62828;
+  padding: 6px 12px;
+  border-radius: 5px;
 }
 
 .project-overlay {
@@ -140,13 +143,14 @@ const projects = [
   right: 0;
   width: 100%;
   padding: 30px;
+  box-sizing: border-box;
   z-index: 1;
   color: #ffffff;
   text-align: right;
 }
 
 .project-overlay span {
-  color: #ffb15c;
+  color: #ffb3b3;
   font-size: 14px;
   font-weight: 700;
 }

@@ -56,7 +56,7 @@ const services = [
 <style scoped>
 .services-section {
   padding: 110px 0;
-  background: #e9eef3;
+  background: #f5f7fa;
 }
 
 .container {
@@ -72,21 +72,21 @@ const services = [
 }
 
 .section-label {
-  color: #f28c28;
+  color: #c62828;
   font-size: 16px;
   font-weight: 800;
 }
 
 .section-heading h2 {
   font-family: 'Alexandria', sans-serif;
-  color: #23476a;
+  color: #174a7e;
   font-size: clamp(28px, 3vw, 40px);
   line-height: 1.6;
   margin: 15px 0;
 }
 
 .section-heading h2 span {
-  color: #f28c28;
+  color: #c62828;
 }
 
 .section-heading p {
@@ -113,8 +113,8 @@ const services = [
 
 .service-card:hover {
   transform: translateY(-8px);
-  border-bottom-color: #f28c28;
-  box-shadow: 0 15px 35px rgba(35, 71, 106, 0.1);
+  border-bottom-color: #c62828;
+  box-shadow: 0 15px 35px rgba(23, 74, 126, 0.1);
 }
 
 .card-top {
@@ -130,8 +130,8 @@ const services = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff3e6;
-  color: #f28c28;
+  background: #fceeee;
+  color: #c62828;
   font-size: 30px;
   border-radius: 10px;
 }
@@ -146,7 +146,7 @@ const services = [
 .service-card h3 {
   font-family: 'Alexandria', sans-serif;
   font-size: 21px;
-  color: #23476a;
+  color: #174a7e;
   margin: 0 0 15px;
 }
 
@@ -163,14 +163,14 @@ const services = [
   align-items: center;
   gap: 10px;
   margin-top: 20px;
-  color: #23476a;
+  color: #174a7e;
   font-weight: 800;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .service-link:hover {
-  color: #f28c28;
+  color: #c62828;
 }
 
 /* Responsive */

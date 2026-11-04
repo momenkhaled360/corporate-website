@@ -42,7 +42,7 @@ const features = [
           نؤمن أن نجاح أي مشروع يبدأ باختيار شريك يهتم بالجودة والالتزام وتلبية احتياجات العملاء.
         </p>
 
-        <a href="#contact" class="why-button"> ابدأ التعامل معنا </a>
+        <a href="#contact" class="why-button">ابدأ التعامل معنا</a>
       </div>
 
       <div class="features-grid">
@@ -63,7 +63,7 @@ const features = [
 <style scoped>
 .why-section {
   padding: 110px 0;
-  background: #23476a;
+  background: linear-gradient(145deg, #174a7e, #0f304f);
 }
 
 .container {
@@ -81,7 +81,7 @@ const features = [
 }
 
 .section-label {
-  color: #ffb15c;
+  color: #ffb3b3;
   font-size: 16px;
   font-weight: 800;
 }
@@ -96,7 +96,7 @@ const features = [
 
 .why-heading h2 span {
   display: block;
-  color: #ffb15c;
+  color: #e53935;
 }
 
 .why-heading p {
@@ -109,7 +109,7 @@ const features = [
 .why-button {
   display: inline-block;
   padding: 13px 28px;
-  background: #f28c28;
+  background: #c62828;
   color: #ffffff;
   border-radius: 6px;
   text-decoration: none;
@@ -118,7 +118,7 @@ const features = [
 }
 
 .why-button:hover {
-  background: #dc7615;
+  background: #a91f1f;
   transform: translateY(-3px);
 }
 
@@ -139,6 +139,7 @@ const features = [
 
 .feature-card:hover {
   background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(229, 57, 53, 0.5);
   transform: translateY(-5px);
 }
 
@@ -155,7 +156,7 @@ const features = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f28c28;
+  background: #c62828;
   color: #ffffff;
   border-radius: 8px;
   font-size: 24px;
