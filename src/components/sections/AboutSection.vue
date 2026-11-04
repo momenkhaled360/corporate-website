@@ -1,5 +1,36 @@
+<script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+
+const sectionRef = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
+
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0]?.isIntersecting) {
+        isVisible.value = true
+        observer?.disconnect()
+      }
+    },
+    {
+      threshold: 0.2,
+    },
+  )
+
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
+  }
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
+</script>
+
 <template>
-  <section id="about" class="about-section">
+  <section id="about" ref="sectionRef" class="about-section" :class="{ 'is-visible': isVisible }">
     <div class="container">
       <div class="about-content">
         <span class="section-label">من نحن</span>
@@ -9,12 +40,12 @@
           <span>وثقة في كل مشروع</span>
         </h2>
 
-        <p>
+        <p class="about-paragraph first-paragraph">
           شركة المروج العربية للخرسانة الجاهزة والبلك، نعمل على تقديم حلول متكاملة في مجال الخرسانة
           الجاهزة ومنتجات البلك، مع الالتزام بأعلى معايير الجودة والدقة في التنفيذ.
         </p>
 
-        <p>
+        <p class="about-paragraph second-paragraph">
           نسعى إلى أن نكون شريكاً موثوقاً لعملائنا من خلال توفير منتجات عالية الجودة، والالتزام
           بمواعيد التسليم، وتلبية احتياجات مختلف المشروعات.
         </p>
@@ -42,6 +73,7 @@
 .about-section {
   padding: 110px 0;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .container {
@@ -54,8 +86,50 @@
   gap: 80px;
 }
 
+/* About Content */
 .about-content {
   text-align: right;
+}
+
+.section-label,
+.about-content h2,
+.about-paragraph,
+.about-button {
+  opacity: 0;
+  transform: translateX(45px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.is-visible .section-label {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.1s;
+}
+
+.is-visible .about-content h2 {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.25s;
+}
+
+.is-visible .first-paragraph {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.4s;
+}
+
+.is-visible .second-paragraph {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.55s;
+}
+
+.is-visible .about-button {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.7s;
 }
 
 .section-label {
@@ -97,7 +171,10 @@
   border-radius: 6px;
   text-decoration: none;
   font-weight: 700;
-  transition: 0.3s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    background 0.3s ease;
 }
 
 .about-button:hover {
@@ -105,6 +182,7 @@
   transform: translateY(-3px);
 }
 
+/* Visual Card Animation */
 .about-visual {
   min-height: 390px;
   background: linear-gradient(145deg, #174a7e, #0f304f);
@@ -115,6 +193,18 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+
+  opacity: 0;
+  transform: translateX(-60px);
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+  transition-delay: 0.2s;
+}
+
+.is-visible .about-visual {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .about-visual::before {
@@ -126,6 +216,7 @@
   border-radius: 50%;
   top: -100px;
   left: -80px;
+  animation: circleFloat 7s ease-in-out infinite alternate;
 }
 
 .visual-card {
@@ -141,12 +232,32 @@
   color: #e53935;
   display: block;
   margin-bottom: 15px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease;
+  transition-delay: 0.8s;
+}
+
+.is-visible .visual-number {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .visual-card h3 {
   font-family: 'Alexandria', sans-serif;
   font-size: 25px;
   margin: 0 0 15px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease;
+  transition-delay: 0.95s;
+}
+
+.is-visible .visual-card h3 {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .visual-card p {
@@ -154,6 +265,16 @@
   font-size: 16px;
   line-height: 2;
   max-width: 400px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease;
+  transition-delay: 1.1s;
+}
+
+.is-visible .visual-card p {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .visual-bottom {
@@ -166,6 +287,25 @@
   margin-top: 35px;
   color: #ffb3b3;
   font-weight: 700;
+
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  transition-delay: 1.2s;
+}
+
+.is-visible .visual-bottom {
+  opacity: 1;
+}
+
+/* Keyframes */
+@keyframes circleFloat {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(25px, 20px);
+  }
 }
 
 /* Responsive */
@@ -195,6 +335,27 @@
 
   .visual-number {
     font-size: 55px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .section-label,
+  .about-content h2,
+  .about-paragraph,
+  .about-button,
+  .about-visual,
+  .visual-number,
+  .visual-card h3,
+  .visual-card p,
+  .visual-bottom {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .about-visual::before {
+    animation: none;
   }
 }
 </style>

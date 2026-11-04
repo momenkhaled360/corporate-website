@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+
 const features = [
   {
     number: '01',
@@ -25,10 +27,37 @@ const features = [
     icon: '◆',
   },
 ]
+
+const sectionRef = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
+
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0]?.isIntersecting) {
+        isVisible.value = true
+        observer?.disconnect()
+      }
+    },
+    {
+      threshold: 0.15,
+    },
+  )
+
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
+  }
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 </script>
 
 <template>
-  <section class="why-section">
+  <section ref="sectionRef" class="why-section" :class="{ 'is-visible': isVisible }">
     <div class="container">
       <div class="why-heading">
         <span class="section-label">لماذا نحن؟</span>
@@ -46,7 +75,12 @@ const features = [
       </div>
 
       <div class="features-grid">
-        <article v-for="feature in features" :key="feature.number" class="feature-card">
+        <article
+          v-for="(feature, index) in features"
+          :key="feature.number"
+          class="feature-card"
+          :style="{ '--feature-index': index }"
+        >
           <div class="feature-top">
             <span class="feature-icon">{{ feature.icon }}</span>
             <span class="feature-number">{{ feature.number }}</span>
@@ -64,6 +98,7 @@ const features = [
 .why-section {
   padding: 110px 0;
   background: linear-gradient(145deg, #174a7e, #0f304f);
+  overflow: hidden;
 }
 
 .container {
@@ -76,11 +111,24 @@ const features = [
   gap: 70px;
 }
 
+/* Heading Animation */
 .why-heading {
   text-align: right;
+
+  opacity: 0;
+  transform: translateX(45px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.is-visible .why-heading {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .section-label {
+  display: inline-block;
   color: #ffb3b3;
   font-size: 16px;
   font-weight: 800;
@@ -106,6 +154,7 @@ const features = [
   margin-bottom: 30px;
 }
 
+/* Button */
 .why-button {
   display: inline-block;
   padding: 13px 28px;
@@ -114,7 +163,19 @@ const features = [
   border-radius: 6px;
   text-decoration: none;
   font-weight: 800;
-  transition: 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.7s ease;
+
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.is-visible .why-button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
 }
 
 .why-button:hover {
@@ -122,27 +183,47 @@ const features = [
   transform: translateY(-3px);
 }
 
+/* Features Grid */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
+/* Feature Card Animation */
 .feature-card {
   padding: 28px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   text-align: right;
-  transition: 0.3s ease;
+
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  transition-delay: calc(var(--feature-index) * 0.15s);
+}
+
+.is-visible .feature-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .feature-card:hover {
   background: rgba(255, 255, 255, 0.14);
   border-color: rgba(229, 57, 53, 0.5);
-  transform: translateY(-5px);
+  transform: translateY(-7px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* Feature Top */
 .feature-top {
   display: flex;
   align-items: center;
@@ -161,6 +242,22 @@ const features = [
   border-radius: 8px;
   font-size: 24px;
   font-weight: 800;
+
+  opacity: 0;
+  transform: scale(0.5) rotate(-15deg);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  transition-delay: calc(var(--feature-index) * 0.15s + 0.3s);
+}
+
+.is-visible .feature-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.12) rotate(5deg);
 }
 
 .feature-number {
@@ -203,6 +300,18 @@ const features = [
 
   .feature-card {
     padding: 24px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .why-heading,
+  .why-button,
+  .feature-card,
+  .feature-icon {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 </style>

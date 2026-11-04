@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
+
 const navLinks = [
   { title: 'الرئيسية', href: '#home' },
   { title: 'من نحن', href: '#about' },
@@ -6,22 +8,41 @@ const navLinks = [
   { title: 'مشاريعنا', href: '#projects' },
   { title: 'تواصل معنا', href: '#contact' },
 ]
+
+const isLoaded = ref(false)
+
+onMounted(() => {
+  requestAnimationFrame(() => {
+    isLoaded.value = true
+  })
+})
 </script>
 
 <template>
-  <header class="site-header">
+  <header class="site-header" :class="{ 'is-loaded': isLoaded }">
     <div class="container">
-      <a href="#home" class="logo">
-        <span class="logo-name">شركة المروج العربية للمقاولات</span>
-        <span class="logo-description"> وأعمال توريد الخرسانة الجاهزة والبلك </span>
+      <!-- Company Logo -->
+      <a href="#home" class="logo" aria-label="شركة المروج العربية - الصفحة الرئيسية">
+        <img
+          :src="'public/images/logo.jpeg'"
+          alt="شعار شركة المروج العربية للمقاولات"
+          class="logo-image"
+        />
       </a>
 
+      <!-- Navigation -->
       <nav class="navigation">
-        <a v-for="link in navLinks" :key="link.href" :href="link.href">
+        <a
+          v-for="(link, index) in navLinks"
+          :key="link.href"
+          :href="link.href"
+          :style="{ '--link-index': index }"
+        >
           {{ link.title }}
         </a>
       </nav>
 
+      <!-- Contact Button -->
       <a href="#contact" class="contact-button">اطلب خدمة</a>
     </div>
   </header>
@@ -29,18 +50,31 @@ const navLinks = [
 
 <style scoped>
 .site-header {
-  background: #174a7e;
-  padding: 15px 0;
+  background: #28669b;
+  padding: 2px 0;
   border-bottom: 3px solid #c62828;
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: 0 4px 18px rgba(23, 74, 126, 0.15);
+
+  /* Reveal Animation */
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity 0.9s ease,
+    clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header.is-loaded {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
 }
 
 .container {
   width: 94%;
   max-width: 1440px;
+  min-height: 85px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -51,32 +85,42 @@ const navLinks = [
 /* Logo */
 .logo {
   display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 110px;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
   flex-shrink: 0;
-  min-width: 0;
+  text-decoration: none;
+
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(12px);
+
+  transition:
+    opacity 0.7s ease,
+    filter 0.7s ease,
+    transform 0.7s ease;
+  transition-delay: 0.3s;
 }
 
-.logo-name {
-  font-family: 'Alexandria', sans-serif;
-  font-size: 19px;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.7;
-  transition: color 0.3s ease;
+.is-loaded .logo {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
 }
 
-.logo:hover .logo-name {
-  color: #ffcccc;
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
-.logo-description {
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #dceaf7;
-  line-height: 1.7;
+.logo:hover {
+  opacity: 0.9;
 }
 
 /* Navigation */
@@ -92,10 +136,27 @@ const navLinks = [
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.3s ease;
   position: relative;
   padding: 8px 0;
   white-space: nowrap;
+
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(15px);
+
+  transition:
+    color 0.3s ease,
+    opacity 0.6s ease,
+    filter 0.6s ease,
+    transform 0.6s ease;
+
+  transition-delay: calc(0.45s + var(--link-index) * 0.1s);
+}
+
+.is-loaded .navigation a {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
 }
 
 .navigation a::after {
@@ -127,9 +188,26 @@ const navLinks = [
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.3s ease;
   white-space: nowrap;
   flex-shrink: 0;
+
+  opacity: 0;
+  filter: blur(4px);
+  transform: scale(0.9);
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  transition-delay: 1s;
+}
+
+.is-loaded .contact-button {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
 }
 
 .contact-button:hover {
@@ -141,15 +219,13 @@ const navLinks = [
 /* Tablet */
 @media (max-width: 1100px) {
   .container {
+    min-height: 75px;
     gap: 18px;
   }
 
-  .logo-name {
-    font-size: 17px;
-  }
-
-  .logo-description {
-    font-size: 11px;
+  .logo {
+    width: 155px;
+    height: 95px;
   }
 
   .navigation {
@@ -169,13 +245,15 @@ const navLinks = [
 /* Mobile */
 @media (max-width: 850px) {
   .container {
+    min-height: auto;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
   }
 
-  .logo-name {
-    font-size: 17px;
+  .logo {
+    width: 140px;
+    height: 85px;
   }
 
   .navigation {
@@ -183,7 +261,7 @@ const navLinks = [
     width: 100%;
     overflow-x: auto;
     gap: 25px;
-    padding: 8px 0;
+    padding: 6px 0;
     scrollbar-width: none;
   }
 
@@ -199,7 +277,7 @@ const navLinks = [
 /* Small Mobile */
 @media (max-width: 480px) {
   .site-header {
-    padding: 12px 0;
+    padding: 3px 0;
   }
 
   .container {
@@ -207,12 +285,9 @@ const navLinks = [
     gap: 12px;
   }
 
-  .logo-name {
-    font-size: 15px;
-  }
-
-  .logo-description {
-    font-size: 10px;
+  .logo {
+    width: 120px;
+    height: 72px;
   }
 
   .contact-button {
@@ -222,6 +297,20 @@ const navLinks = [
 
   .navigation {
     gap: 22px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .logo,
+  .navigation a,
+  .contact-button {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    clip-path: none;
+    transition: none;
   }
 }
 </style>

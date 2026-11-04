@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+
 const projects = [
   {
     title: 'المشروعات السكنية',
@@ -16,10 +18,42 @@ const projects = [
     image: 'public/images/project-3.jpg',
   },
 ]
+
+const sectionRef = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
+
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0]?.isIntersecting) {
+        isVisible.value = true
+        observer?.disconnect()
+      }
+    },
+    {
+      threshold: 0.15,
+    },
+  )
+
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
+  }
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 </script>
 
 <template>
-  <section id="projects" class="projects-section">
+  <section
+    id="projects"
+    ref="sectionRef"
+    class="projects-section"
+    :class="{ 'is-visible': isVisible }"
+  >
     <div class="container">
       <div class="section-heading">
         <span class="section-label">مشاريعنا</span>
@@ -28,7 +62,12 @@ const projects = [
       </div>
 
       <div class="projects-grid">
-        <article v-for="(project, index) in projects" :key="project.title" class="project-card">
+        <article
+          v-for="(project, index) in projects"
+          :key="project.title"
+          class="project-card"
+          :style="{ '--project-index': index }"
+        >
           <div class="project-image">
             <img :src="project.image" :alt="project.title" />
 
@@ -49,6 +88,7 @@ const projects = [
 .projects-section {
   padding: 110px 0;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .container {
@@ -57,13 +97,26 @@ const projects = [
   margin: auto;
 }
 
+/* Section Heading */
 .section-heading {
   text-align: center;
   max-width: 700px;
   margin: 0 auto 55px;
+
+  opacity: 0;
+  transform: translateY(35px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.is-visible .section-heading {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .section-label {
+  display: inline-block;
   color: #c62828;
   font-size: 16px;
   font-weight: 800;
@@ -87,17 +140,40 @@ const projects = [
   line-height: 2;
 }
 
+/* Projects Grid */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
 }
 
+/* Project Card Animation */
 .project-card {
   overflow: hidden;
   border-radius: 10px;
+
+  opacity: 0;
+  transform: translateY(50px) scale(0.97);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    box-shadow 0.4s ease;
+
+  transition-delay: calc(var(--project-index) * 0.2s);
 }
 
+.is-visible .project-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(23, 74, 126, 0.16);
+}
+
+/* Project Image */
 .project-image {
   position: relative;
   height: 370px;
@@ -109,20 +185,33 @@ const projects = [
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.project-card:hover img {
   transform: scale(1.08);
+  transition: transform 0.8s ease;
 }
 
+.is-visible .project-image img {
+  transform: scale(1);
+}
+
+.project-card:hover .project-image img {
+  transform: scale(1.12);
+}
+
+/* Image Overlay */
 .project-image::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(15, 48, 79, 0.95), rgba(15, 48, 79, 0.05) 70%);
+  opacity: 0.9;
+  transition: opacity 0.4s ease;
 }
 
+.project-card:hover .project-image::after {
+  opacity: 1;
+}
+
+/* Project Number */
 .project-number {
   position: absolute;
   top: 20px;
@@ -135,8 +224,21 @@ const projects = [
   background: #c62828;
   padding: 6px 12px;
   border-radius: 5px;
+
+  opacity: 0;
+  transform: translateY(-15px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  transition-delay: calc(var(--project-index) * 0.2s + 0.3s);
 }
 
+.is-visible .project-number {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Project Details */
 .project-overlay {
   position: absolute;
   bottom: 0;
@@ -147,6 +249,21 @@ const projects = [
   z-index: 1;
   color: #ffffff;
   text-align: right;
+
+  transform: translateY(20px);
+  opacity: 0.85;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
+}
+
+.is-visible .project-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.project-card:hover .project-overlay {
+  transform: translateY(-8px);
 }
 
 .project-overlay span {
@@ -183,6 +300,19 @@ const projects = [
 
   .section-heading p {
     font-size: 15px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .section-heading,
+  .project-card,
+  .project-image img,
+  .project-number,
+  .project-overlay {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 </style>
