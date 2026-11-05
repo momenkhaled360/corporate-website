@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="hero-content">
-        <span class="hero-label"> المروج العربية للخرسانة الجاهزة والبلك </span>
+        <span class="hero-label"> المروج العربية للخرسانة الجاهزة والبلك واعمال المقاولات</span>
 
         <h1>
           نبني أساس المستقبل
