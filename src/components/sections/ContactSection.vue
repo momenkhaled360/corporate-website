@@ -39,9 +39,10 @@ async function submitForm() {
         from_name: name.value,
         phone: phone.value,
         message: message.value,
-        to_email: companyEmail,
       },
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      {
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      },
     )
 
     submitStatus.value = 'تم إرسال رسالتك بنجاح، سنتواصل معك قريباً.'
