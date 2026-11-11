@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // استبدل الرقم برقم الشركة بكود الدولة بدون +
-const phoneNumber = '00966567130574'
+const phoneNumber = '966567130574'
 const whatsappMessage = 'السلام عليكم، أريد الاستفسار عن خدمات شركة المروج العربية.'
 
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`
