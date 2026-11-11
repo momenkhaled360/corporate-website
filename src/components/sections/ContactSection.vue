@@ -50,9 +50,12 @@ async function submitForm() {
     name.value = ''
     phone.value = ''
     message.value = ''
-  } catch (error) {
-    console.error('Email sending error:', error)
-    submitStatus.value = 'حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى.'
+  } catch (error: any) {
+    console.error('EmailJS Error:', error)
+    console.log('Status:', error.status)
+    console.log('Text:', error.text)
+
+    submitStatus.value = `فشل الإرسال: ${error.text || error.message}`
   } finally {
     isSending.value = false
   }
