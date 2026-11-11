@@ -1,26 +1,60 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import emailjs from '@emailjs/browser'
 
 const name = ref('')
 const phone = ref('')
 const message = ref('')
+const isSending = ref(false)
+const submitStatus = ref('')
+
+const companyEmail = 'Hanyamam123@gmail.com'
+
+const mapLink = 'https://maps.app.goo.gl/17ycdbq7e6PzkvzHA?g_st=aw'
+
+const mapEmbedUrl =
+  'https://www.google.com/maps?q=' +
+  encodeURIComponent('8267 ابن دقمان، حي الجابرة، المدينة المنورة، 42392، السعودية') +
+  '&output=embed'
 
 const sectionRef = ref<HTMLElement | null>(null)
 const isVisible = ref(false)
 
 let observer: IntersectionObserver | null = null
 
-function submitForm() {
-  if (!name.value || !phone.value || !message.value) {
-    alert('من فضلك أكمل جميع البيانات')
+async function submitForm() {
+  if (!name.value.trim() || !phone.value.trim() || !message.value.trim()) {
+    submitStatus.value = 'من فضلك أكمل جميع البيانات'
     return
   }
 
-  alert('تم استلام بياناتك بنجاح، سنتواصل معك قريباً')
+  isSending.value = true
+  submitStatus.value = ''
 
-  name.value = ''
-  phone.value = ''
-  message.value = ''
+  try {
+    await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: name.value,
+        phone: phone.value,
+        message: message.value,
+        to_email: companyEmail,
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+    )
+
+    submitStatus.value = 'تم إرسال رسالتك بنجاح، سنتواصل معك قريباً.'
+
+    name.value = ''
+    phone.value = ''
+    message.value = ''
+  } catch (error) {
+    console.error('Email sending error:', error)
+    submitStatus.value = 'حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى.'
+  } finally {
+    isSending.value = false
+  }
 }
 
 onMounted(() => {
@@ -31,9 +65,7 @@ onMounted(() => {
         observer?.disconnect()
       }
     },
-    {
-      threshold: 0.15,
-    },
+    { threshold: 0.15 },
   )
 
   if (sectionRef.value) {
@@ -56,40 +88,43 @@ onUnmounted(() => {
     <div class="container">
       <div class="contact-heading">
         <span class="section-label">تواصل معنا</span>
-
         <h2>دعنا نساعدك في <span>مشروعك القادم</span></h2>
-
         <p>يسعدنا استقبال استفساراتك ومساعدتك في اختيار الحلول المناسبة لاحتياجات مشروعك.</p>
       </div>
 
       <div class="contact-content">
         <div class="contact-info">
           <h3>بيانات التواصل</h3>
-          <p>يمكنك التواصل معنا من خلال بيانات الاتصال التالية.</p>
+          <p>يمكنك التواصل معنا من خلال البريد الإلكتروني أو زيارة موقعنا.</p>
 
           <div class="info-item" style="--item-index: 0">
-            <span class="info-icon">☎</span>
+            <span class="info-icon">✉</span>
             <div>
-              <h4>رقم الهاتف</h4>
-              <p>أضف رقم هاتف الشركة</p>
+              <h4>البريد الإلكتروني</h4>
+              <a :href="`mailto:${companyEmail}`">{{ companyEmail }}</a>
             </div>
           </div>
 
           <div class="info-item" style="--item-index: 1">
-            <span class="info-icon">✉</span>
+            <span class="info-icon">⌖</span>
             <div>
-              <h4>البريد الإلكتروني</h4>
-              <p>أضف البريد الإلكتروني للشركة</p>
+              <h4>العنوان الوطني</h4>
+              <p>مبنى 8267، شارع ابن دقمان، حي الجابرة، المدينة المنورة، الرمز البريدي 42392</p>
             </div>
           </div>
 
           <div class="info-item" style="--item-index: 2">
-            <span class="info-icon">⌖</span>
+            <span class="info-icon">⌑</span>
             <div>
-              <h4>العنوان</h4>
-              <p>أضف عنوان الشركة</p>
+              <h4>العنوان المختصر</h4>
+              <p>DMWD8267</p>
             </div>
           </div>
+
+          <a :href="mapLink" target="_blank" rel="noopener noreferrer" class="map-link">
+            عرض الموقع على Google Maps
+            <span>↗</span>
+          </a>
         </div>
 
         <form class="contact-form" @submit.prevent="submitForm">
@@ -116,8 +151,32 @@ onUnmounted(() => {
             ></textarea>
           </div>
 
-          <button type="submit" class="submit-button">إرسال الرسالة</button>
+          <p v-if="submitStatus" class="form-status" role="status" aria-live="polite">
+            {{ submitStatus }}
+          </p>
+
+          <button type="submit" class="submit-button" :disabled="isSending">
+            {{ isSending ? 'جاري الإرسال...' : 'إرسال الرسالة' }}
+          </button>
         </form>
+      </div>
+
+      <div class="contact-map">
+        <div class="map-heading">
+          <div>
+            <span class="section-label">موقعنا</span>
+            <h3>تفضل بزيارتنا في المدينة المنورة</h3>
+          </div>
+          <a :href="mapLink" target="_blank" rel="noopener noreferrer"> الاتجاهات على الخريطة ↗ </a>
+        </div>
+
+        <iframe
+          :src="mapEmbedUrl"
+          title="موقع شركة المروج العربية على Google Maps"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
   </section>
@@ -445,6 +504,127 @@ onUnmounted(() => {
 
   .contact-info::before {
     transform: none;
+  }
+}
+
+.info-item a {
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  direction: ltr;
+  display: inline-block;
+}
+
+.info-item a:hover {
+  color: #ffb3b3;
+}
+
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+  margin-top: 5px;
+  padding: 12px 18px;
+  background: #c62828;
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.map-link:hover {
+  background: #a91f1f;
+  transform: translateY(-3px);
+}
+
+.contact-map {
+  margin-top: 35px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(23, 74, 126, 0.06);
+
+  opacity: 0;
+  transform: translateY(25px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  transition-delay: 0.4s;
+}
+
+.is-visible .contact-map {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.map-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.map-heading h3 {
+  color: #174a7e;
+  font-family: 'Alexandria', sans-serif;
+  font-size: 20px;
+  margin: 8px 0 0;
+}
+
+.map-heading a {
+  color: #c62828;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.contact-map iframe {
+  display: block;
+  width: 100%;
+  height: 380px;
+  border: 0;
+  border-radius: 8px;
+}
+
+.form-status {
+  margin: 0 0 15px;
+  color: #174a7e;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.submit-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .contact-map {
+    padding: 15px;
+  }
+
+  .map-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .contact-map iframe {
+    height: 280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-map {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 </style>
